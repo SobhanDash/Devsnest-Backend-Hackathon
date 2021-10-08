@@ -12,15 +12,8 @@ const Team = sequelize.define('Team', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    teamMembers: [
-        { 
-            name: User.name,
-            profileImage: User.profileImage,
-        }
-    ]
-    // member: {
-    //     // [name, id, password]: User,
-    //     name: User.name,
-    //     profileImage: User.profileImage,
-    // }
+    teamMembers: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
+    }
 })
