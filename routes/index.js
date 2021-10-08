@@ -1,12 +1,9 @@
-var express = require("express");
+const { application } = require('express');
+var express = require('express');
 var router = express.Router();
-let { login, logout } = require("../controllers/login");
-let { register } = require("../controllers/register");
-let registerChecks = require("../middlewares/registerChecks");
 
 /* GET home page. */
-router.use("/login", login);
-router.use("/logout", logout);
-router.use("/register", registerChecks, register);
-
+router.use('/login',require('./login'))
+//router.use('/logout',require('./logout'))
+//router.use('/register',require('./register'))
 module.exports = router;
