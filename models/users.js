@@ -11,10 +11,6 @@ const User = sequelize.define('User',
         type: DataTypes.STRING,
         allowNull: false,
     },
-    confirm_password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     username: {
         type: DataTypes.STRING,
         allowNull: false,

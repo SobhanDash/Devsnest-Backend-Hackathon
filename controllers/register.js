@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRound = 10;
 
 const register =  async (req,res) =>{
-const {email, pass} = req.body;
+const {email, password , username} = req.body;
 
 try{
 	const alreadyExists = await User.findOne({where :{email}})
@@ -11,9 +11,9 @@ try{
 	res.status(401).send("Email already exists");
 	}
 	const salt = bcrypt.genSaltSync(saltRound);
-	const hash  = bcrypt.hashSync(pass,salt);	
+	const hash  = bcrypt.hashSync(password,salt);	
 	
-	const newUser = new User({email: email.toLowerCase(), password: hash});
+	const newUser = new User({email: email.toLowerCase(), password: hash, username:username});
 	const savedUser = await newUser.save();
 	res.status(201).send(savedUser);
 }
