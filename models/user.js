@@ -37,7 +37,7 @@ const User = sequelize.define('User',
         type: DataTypes.BIGINT,
     },
     profileImage: {
-        type: DataTypes.STRING,
+        type: DataTypes.BLOB,
     },
     link: {
         type: DataTypes.STRING,
