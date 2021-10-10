@@ -7,13 +7,17 @@ const Team = sequelize.define('Team', {
         type: DataTypes.BIGINT,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
     },
     teamName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false, 
     },
     teamMembers: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        //TODO
+        // type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.BIGINT), 
+
         allowNull: false,
     }
 })

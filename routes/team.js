@@ -1,64 +1,49 @@
-/*
-
-CHANGES I DID: ../models/user.js
-                    added timestamp and paranoid
-               ../models/team.js
-                    added timestamp and paranoid
-
-*/
-
+const {Op} = require('sequelize');
 const express = require('express');
+const { reset } = require('nodemon');
 const sequelize = require('../database/index');
 const Team = require('../models/team')
+const User = require('../models/user')
+const {deleteTeam, createTeam, updateTeamName, removeMember,addMember} = require('../controllers/team');
+const { checkRole } = require('../middlewares/auth');
 const router = express.Router();
 
-// connect to database and check if team exist 
-// if not then throw error 
-// else delete the row from database => DELETED SUCCESSFULLY
+const {isUser, isTeam} = require('../utils/validate')
 
-// req => TeamName
+// Associations
+// sequelize.user.hasMany(sequelize.team)
+// sequelize.team.belongsTo(sequelize.user);
+
+// User.hasOne(Team);
+// Team.belongsTo(User);
 
 
-// convert input to lowercase
-// search for the team in db
+router.delete('/update/delete-team',checkRole(["admin", "batch-leader"]), deleteTeam);
 
-const deleteTeam = async (req, res) => {
-    let {teamName} = req.body;
+router.post('/update/create-team',checkRole(["admin", "batch-leader"]), createTeam);
 
-    // convert input to lowercase
-    teamName = teamName.toLowerCase().replace(" ", "");
+router.put('/update/team-name',checkRole(["admin", "batch-leader"]), updateTeamName);
 
-    try{
-        // check if team exists or not
-        const team = await Team.findOne({where: {teamName: teamName}});
-        if(!team) {
-            res.status(404).send("Team not found");
-        }
-    
-        // if exists then do the following
-        await Team.destroy({
-            where: {
-                teamName: teamName,
-            }
-        }).then((rowDeleted) => {
-            if(rowDeleted===1) {
-                console.log("------ROW DELETED SUCCESSFULLY-----")
-            }
-        }, (err) => {
-            console.log(err);
-        })
-        ;
+router.put('/update/remove-member',checkRole(["admin", "batch-leader"]), removeMember);
 
-        console.log("Team deleted Successfully");
-        
-    }
-    catch (err) {
-        console.log("SOMETHING WENT WRONG WITH TEAM DELETION");
-        console.error(err);
-        res.status(501).send("Something's wrong with the server");
-    }
-};
+router.put('/update/add-member',checkRole(["admin", "batch-leader"]), addMember);
 
-router.delete('/delete', deleteTeam);
+
+
+// TEAM MEMBER: 
+/*
+    To add member:
+        check if memberID already exists.
+        if yes then ERROR. else add the member.
+*/
+/*
+To remove member: 
+    check if the memberID already exists. 
+    if yes then remove member. else ERROR
+*/
+
+
+
+
 
 module.exports = router;

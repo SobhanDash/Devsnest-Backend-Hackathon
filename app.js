@@ -21,8 +21,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', userRouter);
+app.use('/api/team', teamRouter);
 app.use('/api/scrum', scrumRouter);
-app.use('/team', teamRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
