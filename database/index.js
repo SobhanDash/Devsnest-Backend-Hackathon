@@ -1,9 +1,11 @@
-const { Sequelize } = require('sequelize');
-const { sequelize_database,
-    sequelize_username,
-    sequelize_password,
-    sequelize_host,
-    sequelize_dialect, } = require("../config"); 
+const { Sequelize } = require("sequelize");
+const {
+  sequelize_database,
+  sequelize_username,
+  sequelize_password,
+  sequelize_host,
+  sequelize_dialect,
+} = require("../config");
 
 const sequelize = new Sequelize(
     sequelize_database,
@@ -18,15 +20,13 @@ const sequelize = new Sequelize(
 sequelize.sync();
 
 (async () => {
-    try {
-        await sequelize.authenticate();
-        console.log("Connection with DB established");
-    }
-    catch (err) {
-        console.error("Unable to connect with DB");
-    }
+  try {
+    await sequelize.authenticate();
+    console.log("Connection with DB established");
+  } catch (err) {
+    console.error("Unable to connect with DB");
+  }
 })();
-
 
 // sequelize.user.hasMany(sequelize.team)
 // sequelize.team.belongsTo(sequelize.user);
