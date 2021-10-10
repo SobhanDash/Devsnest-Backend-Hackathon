@@ -6,7 +6,8 @@ const Scrum = sequelize.define('Scrum',
     UserId: {
         type: DataTypes.INTEGER,
         primaryKey:true,
-        allowNull: false
+        allowNull: false,
+        autoIncrement:true
     },
     THAlink: {
         type: DataTypes.STRING,
