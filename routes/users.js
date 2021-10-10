@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 let registerInitialCheck = require("../middlewares/registerInitialheck");
+let { checkRole, isLoggedIn, isVerified } = require("../middlewares/auth");
 let register = require("../controllers/register");
 let { login, logout } = require("../controllers/login");
 let {
@@ -10,8 +11,34 @@ let {
   updateActivity,
   deleteUser,
 } = require("../controllers/user");
-let { isLoggedIn, isVerified, checkRole } = require("../middlewares/auth");
-const { SECRET } = require("../config");
+const User = require("../models/user");
+
+router.param("emailId", async (req, res, next, emailId) => {
+  if (emailId) {
+    try {
+      const user = await User.findOne({ where: { email: emailId } });
+      if (user) {
+        req.user = user;
+        next();
+      } else {
+        res.status(400).send({ message: "Invalid User" });
+      }
+    } catch (error) {
+      return res.status(404).send({ message: "Email not found", err: error });
+    }
+  }
+});
+
+router.param("isActive", async (req, res, next, isActive) => {
+  try {
+    const active = isActive === "true" ? true : false;
+    req.body.isActive = active;
+    // console.log(req.body.isActive);
+    next();
+  } catch (error) {
+    res.status(400).send({ message: "Issue in isActive", err: error });
+  }
+});
 
 // http://localhost:5000/api/user/login
 router.post("/user/login", login);
@@ -35,7 +62,8 @@ router.put(
   "/user/profile/info/:emailId",
   ...isLoggedIn(),
   isVerified,
-  checkRole(["student"], changeInfo)
+  checkRole(["student"]),
+  changeInfo
 );
 
 // http://localhost:5000/api/user/profile/active/:isActive/:emailId
@@ -43,7 +71,8 @@ router.put(
   "/user/profile/active/:isActive/:emailId",
   ...isLoggedIn(),
   isVerified,
-  checkRole(["admin"], updateActivity)
+  checkRole(["admin", "batch-leader"]),
+  updateActivity
 );
 
 // http://localhost:5000/api/user/profile/info/:emailId
@@ -51,6 +80,7 @@ router.delete(
   "/user/profile/info/:emailId",
   ...isLoggedIn(),
   isVerified,
+  checkRole(["admin", "batch-leader"]),
   deleteUser
 );
 

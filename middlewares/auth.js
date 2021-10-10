@@ -33,8 +33,8 @@ const isVerified = async (req, res, next) => {
   if (id) {
     try {
       const user = await User.findOne({ where: { id } });
-      console.log(user);
       if (user) {
+        console.log(user.dataValues.role);
         next();
       }
     } catch (err) {
@@ -42,14 +42,6 @@ const isVerified = async (req, res, next) => {
     }
   }
 };
-
-const isAdmin = (req, res, next) => {};
-
-const isBatchLeader = (req, res, next) => {};
-
-const isTeamLeader = (req, res, next) => {};
-
-const isVTL = (req, res, next) => {};
 
 
 module.exports = { checkRole, isLoggedIn, isVerified };

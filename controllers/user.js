@@ -16,7 +16,7 @@ exports.changeInfo = async (req, res) => {
   const user = req.user;
   try {
     //TODO: change info only by user
-    
+    res.send(user);
   } catch (error) {
     res
       .status(500)
@@ -25,16 +25,17 @@ exports.changeInfo = async (req, res) => {
 };
 
 exports.updateActivity = async (req, res) => {
+  console.log(req);
   const user = req.user;
+  console.log(user);
   try {
-    user.isActive = req.body.isActive;
+    console.log(user);
+    user.dataValues.isActive = req.body.isActive;
     const updatedUser = await user.save();
-    res
-      .status(200)
-      .send({
-        message: `Updated activity status of user ${user.name}`,
-        updatedUser,
-      });
+    res.status(200).send({
+      message: `Updated activity status of user ${user.name}`,
+      updatedUser,
+    });
   } catch (error) {
     res
       .status(500)
