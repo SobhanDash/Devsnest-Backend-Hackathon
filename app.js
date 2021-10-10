@@ -27,10 +27,6 @@ app.use("/api/team", teamRouter);
 app.use("/api", scrumRouter);
 
 
-app.use('/api', userRouter);
-app.use('/api/team', teamRouter);
-app.use('/api', scrumRouter);
-
 app.get("/", (req, res) => {
   res.status(200).send("Devsnest Milaap");
 });
