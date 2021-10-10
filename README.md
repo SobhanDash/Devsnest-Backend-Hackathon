@@ -23,6 +23,6 @@
 
 - Batch Leader: Batch Leader should be able to do CRUD only on his own groups forthis week.
 
-- Batch Leader: Batch Leade should not be able to edit past data, but can view them.
+- Batch Leader: Batch Leader should not be able to edit past data, but can view them.
 
 - Team Leader and Vice Team Leader, should be able to mark attendance for today;s scrum.

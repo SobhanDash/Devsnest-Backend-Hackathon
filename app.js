@@ -8,6 +8,7 @@ var logger = require("morgan");
 var userRouter = require('./routes/users');
 var scrumRouter = require('./routes/scrum');
 var teamRouter = require('./routes/team');
+var {isLoggedIn, isVerified} = require('./middlewares/auth');
 
 
 var app = express();
@@ -21,6 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+
 
 
 app.use('/api', userRouter);

@@ -6,7 +6,7 @@ const User = require("../models/user");
 const checkRole = (roles) => (req, res, next) => {
   !roles.includes(req.user.role)
     ? res.status(401).json("Unauthorized")
-    : next();
+    : next(); 
 };
 
 const isLoggedIn = () => {
@@ -16,6 +16,7 @@ const isLoggedIn = () => {
       if (typeof bearerHeader !== undefined) {
         const bearerToken = bearerHeader.split(" ")[1];
         req.token = bearerToken;
+        
         next();
       } else {
         res.status(402).send({ message: "Unauthorized" });
@@ -35,6 +36,10 @@ const isVerified = async (req, res, next) => {
       const user = await User.findOne({ where: { id } });
       console.log(user);
       if (user) {
+        req.user = {
+          role: user.dataValues.role,
+        };
+        console.log(user.dataValues.role);
         next();
       }
     } catch (err) {

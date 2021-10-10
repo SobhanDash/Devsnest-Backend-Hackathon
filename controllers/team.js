@@ -11,11 +11,10 @@ const {isUser, isTeam} = require('../utils/validate')
 
 const deleteTeam = async (req, res) => {
     let {teamName} = req.body;
-    // convert input to lowercase
+
     teamName = teamName.toLowerCase().replace(/ /g, '');
 
     try{
-        // check if team exists or not
         
         const team = await Team.findOne({where: {teamName: teamName}});
 
@@ -51,17 +50,18 @@ const deleteTeam = async (req, res) => {
 
 
 const createTeam =  async (req, res)=> {
-    let { teamId, teamName, teamMembers} = req.body;
+    let { teamName, teamMembers} = req.body;
 
     try{
         const newTeam = new Team({
-            teamId: teamId,
+            // teamId: teamId,
             teamName: teamName.toLowerCase().replace(/ /g, ''),
             teamMembers: teamMembers,
         });
 
             const savedTeam = await newTeam.save();
             res.status(201).send(savedTeam);
+            console.log(req);
     }
     catch(err) {
         console.log("THE ERROR IS: ");
@@ -106,12 +106,6 @@ const removeMember = async (req, res) => {
     teamName = teamName.toLowerCase().replace(/ /g, '');
     
     try{
-        // USER VALIDATION
-        // if(!isUser(memberId)) {
-        //     res.status(401).send("User doesn't exist");
-        // }
-        
-        // TEAM VALIDATION
         if(!isTeam(teamName)) {
             res.status(401).send("Team doesn't exist");
         }
@@ -157,13 +151,6 @@ const addMember = async (req, res) => {
     teamName = teamName.toLowerCase().replace(/ /g, '');
     
     try{
-        // getting team name of the member to be removed
-        // USER VALIDATION
-        // if(!isUser(memberId)) {
-        //     res.status(401).send("User doesn't exist");
-        // }
-        
-        // TEAM VALIDATION
         if(!isTeam(teamName)) {
             res.status(401).send("Team doesn't exist");
         }
