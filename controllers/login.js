@@ -7,8 +7,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ where: { email: email } });
-    console.log(user);
+    const user = await User.findOne({ where: { email } });
     const isPassSame = await bcrypt.compare(password, user.password);
 
     if (isPassSame) {
@@ -20,13 +19,15 @@ exports.login = async (req, res) => {
         SECRET,
         { expiresIn: "8h" }
       );
-      console.log(token);
+
+      res.cookie("token", token);
+
       let result = {
         id: user.id,
         name: user.name,
         email: user.email,
         token: `Bearer ${token}`,
-        expiresIn: 168,
+        expiresIn: "1d",
       };
 
       return res.status(200).json({
@@ -46,6 +47,7 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
+  res.clearCookie("token");
   return res.status(200).send({
     message: "User logged out successfully",
   });
