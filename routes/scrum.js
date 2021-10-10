@@ -8,7 +8,6 @@ const Scrum = require('../models/scrum');
 // router.use(userAuth);
 
 router.param("userId", async (req, res, next, userId) => {
-    console.log("INSIDE USERID PARAM FUNC");
     try {
         const scrum = await Scrum.findOne({
             where: {
@@ -27,7 +26,6 @@ router.param("userId", async (req, res, next, userId) => {
 });
 
 router.param("isPresent", async (req, res, next, isPresent) => {
-    console.log("INSIDE ISPRESENT");
     const att = isPresent === "true" ? true : false;
     req.body.isPresent = att;
     next();

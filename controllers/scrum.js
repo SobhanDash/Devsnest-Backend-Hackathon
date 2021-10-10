@@ -60,7 +60,6 @@ const updateScrum = async(req, res) => {
 };
 
 const markAttendance = async(req, res) => {
-    console.log("INSIDE MARK ATTENDANCE");
     const scrum = req.scrum;
     scrum.isPresent = req.body.isPresent;
     const updatedScrum = await scrum.save();
