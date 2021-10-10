@@ -3,6 +3,7 @@ const {
   sequelize_database,
   sequelize_username,
   sequelize_password,
+  sequelize_host,
 } = require("../config");
 
 const sequelize = new Sequelize(
@@ -10,7 +11,7 @@ const sequelize = new Sequelize(
   sequelize_username,
   sequelize_password,
   {
-    host: "localhost",
+    host: sequelize_host,
     dialect: "postgres",
   }
 );
