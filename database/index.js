@@ -6,12 +6,19 @@ const { sequelize_database,
     sequelize_dialect, } = require("../config"); 
 
 const sequelize = new Sequelize(
-    sequelize_database,
-    sequelize_username,
-    sequelize_password,
+    // sequelize_database,
+    // sequelize_username,
+    // sequelize_password,
+    // {
+    //     host: sequelize_host,
+    //     dialect: sequelize_dialect
+    // }
+    "devsnesthackathon", 
+    "postgres",
+    "omkarg1417",
     {
-        host: sequelize_host,
-        dialect: sequelize_dialect
+        host: "localhost",
+        dialect: "postgres"
     }
 );
 
@@ -26,5 +33,9 @@ sequelize.sync();
         console.error("Unable to connect with DB");
     }
 })();
+
+
+// sequelize.user.hasMany(sequelize.team)
+// sequelize.team.belongsTo(sequelize.user);
 
 module.exports = sequelize;
