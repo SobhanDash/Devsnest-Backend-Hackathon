@@ -3,7 +3,7 @@ const sequelize = require('../database');
 
 const Scrum = sequelize.define('Scrum',
 {
-    UserId: {
+    userId: {
         type: DataTypes.INTEGER,
         primaryKey:true,
         allowNull: false,
@@ -16,24 +16,27 @@ const Scrum = sequelize.define('Scrum',
     backlog: {
         type: DataTypes.STRING
     },
-    LastLecture: {
+    lastLecture: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
-    THA_Progress: {
+    THAprogress: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Topics_To_Cover: {
+    topicsToCover: {
         type: DataTypes.STRING,
     },
-    Present: {
+    isPresent: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
-
     },
     date: {
         type: DataTypes.DATE,
+    },
+    teamId: {
+        type: DataTypes.BIGINT,
+        allowNull: false
     }
 });
 

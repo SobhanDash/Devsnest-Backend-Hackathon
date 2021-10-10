@@ -2,7 +2,6 @@ const expressJwt = require("express-jwt");
 const { SECRET } = require("../config");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-6;
 
 const checkRole = (roles) => (req, res, next) => {
   !roles.includes(req.user.role)

@@ -6,19 +6,12 @@ const { sequelize_database,
     sequelize_dialect, } = require("../config"); 
 
 const sequelize = new Sequelize(
-    // sequelize_database,
-    // sequelize_username,
-    // sequelize_password,
-    // {
-    //     host: sequelize_host,
-    //     dialect: sequelize_dialect
-    // }
-    "devsnesthackathon", 
-    "postgres",
-    "omkarg1417",
+    sequelize_database,
+    sequelize_username,
+    sequelize_password,
     {
-        host: "localhost",
-        dialect: "postgres"
+        host: sequelize_host,
+        dialect: sequelize_dialect
     }
 );
 

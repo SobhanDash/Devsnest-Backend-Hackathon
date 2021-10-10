@@ -10,7 +10,7 @@ let {
   updateActivity,
   deleteUser,
 } = require("../controllers/user");
-let { isLoggedIn, isVerified } = require("../middlewares/auth");
+let { isLoggedIn, isVerified, checkRole } = require("../middlewares/auth");
 const { SECRET } = require("../config");
 
 // http://localhost:5000/api/user/login
