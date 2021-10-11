@@ -85,7 +85,7 @@ router.delete(
   deleteUser
 );
 
-// https://localhost:5000/api/user/testRoute
+// http://localhost:5000/api/user/testRoute
 router.get("/user/test", ...isLoggedIn(), isVerified, (req, res) => {
   res.status(200).send({
     message: "Authorized",

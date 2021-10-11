@@ -30,7 +30,7 @@ exports.updateActivity = async (req, res) => {
   console.log(user);
   try {
     console.log(user);
-    user.dataValues.isActive = req.body.isActive;
+    user.dataValues.isActive = req.param.isActive;
     const updatedUser = await user.save();
     res.status(200).send({
       message: `Updated activity status of user ${user.name}`,
