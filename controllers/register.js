@@ -3,7 +3,8 @@ const bcrypt = require("bcrypt");
 const saltRound = 10;
 
 const register = async (req, res) => {
-  const { email, password, name, phone, team } = req.body;
+  const { email, password, name, phone, team, role, profileImage, link } =
+    req.body;
 
   try {
     const alreadyExists = await User.findOne({ where: { email } });
@@ -19,6 +20,9 @@ const register = async (req, res) => {
       name: name,
       phone: phone,
       team: team,
+      role: role,
+      profileImage: profileImage,
+      link: link,
     });
     const savedUser = await newUser.save();
     res.status(201).send(savedUser);
