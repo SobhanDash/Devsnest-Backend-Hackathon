@@ -32,10 +32,10 @@ exports.updateActivity = async (req, res) => {
     console.log(req.body);
     // user.isActive = req.body.isActive;
     user.isActive = isActive === "true" ? true : false;
-    const updatedUser = await user.save();
+    // const updatedUser = await user.save();
     res.status(200).send({
       message: `Updated activity status of user ${user.name}`,
-      updatedUser,
+      // updatedUser,
     });
   } catch (error) {
     console.log(error);
