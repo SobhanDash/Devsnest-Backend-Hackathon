@@ -25,6 +25,29 @@ const isLoggedIn = () => {
   ];
 };
 
+// const isVerified = async (req, res, next) => {
+//   const bearerHeader = req.headers["authorization"];
+//   const bearerToken = bearerHeader.split(" ")[1];
+//   const decoded = jwt.verify(bearerToken, SECRET);
+//   const id = decoded["id"];
+
+//   if (id) {
+//     try {
+//       const user = await User.findOne({ where: { id } });
+//       if (user) {
+//         req.user = {
+//           role: user.dataValues.role,
+//         };
+//         // console.log(user.dataValues.role);
+//         next();
+//       }
+//     } catch (err) {
+//       console.log(`Error occured ${err.name}`);
+//       res.status(400).send({ message: "Token not found" });
+//     }
+//   }
+// };
+
 const isVerified = async (req, res, next) => {
   const bearerHeader = req.headers["authorization"];
   const bearerToken = bearerHeader.split(" ")[1];
@@ -35,10 +58,8 @@ const isVerified = async (req, res, next) => {
     try {
       const user = await User.findOne({ where: { id } });
       if (user) {
-        req.user = {
-          role: user.dataValues.role,
-        };
-        // console.log(user.dataValues.role);
+        req.user = user;
+        req.user.role = user.role;
         next();
       }
     } catch (err) {
