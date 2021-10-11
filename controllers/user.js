@@ -25,18 +25,20 @@ exports.changeInfo = async (req, res) => {
 };
 
 exports.updateActivity = async (req, res) => {
-  console.log(req);
-  const user = req.user;
-  console.log(user);
+  let { isActive, emailId } = req.params;
+
+  const user = await User.findOne({ where: { email: emailId } });
   try {
-    console.log(user);
-    user.dataValues.isActive = req.body.isActive;
+    console.log(req.body);
+    // user.isActive = req.body.isActive;
+    user.isActive = isActive === "true" ? true : false;
     const updatedUser = await user.save();
     res.status(200).send({
       message: `Updated activity status of user ${user.name}`,
       updatedUser,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .send({ message: "Unable to update user info", errorMessage: error });
