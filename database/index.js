@@ -1,19 +1,34 @@
 const { Sequelize } = require("sequelize");
-const {
-  sequelize_database,
-  sequelize_username,
-  sequelize_password,
-  sequelize_host,
-} = require("../config");
+//for localhost:
+// const {
+//   sequelize_database,
+//   sequelize_username,
+//   sequelize_password,
+//   sequelize_host,
+//   sequelize_dialect,
+// } = require("../config");
 
 const sequelize = new Sequelize(
-  sequelize_database,
-  sequelize_username,
-  sequelize_password,
+  //production:
+  process.env.DATABASE_URL,
   {
-    host: sequelize_host,
     dialect: "postgres",
+    protocol: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   }
+  //localhost:
+  // sequelize_database,
+  // sequelize_username,
+  // sequelize_password,
+  // {
+  //   host: sequelize_host,
+  //   dialect: sequelize_dialect,
+  // }
 );
 
 sequelize.sync();
@@ -21,7 +36,8 @@ sequelize.sync();
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log("Connection with DB established");
+    console.log(`DB ${process.env.DATABASE_NAME}, CONNECTED SUCCESSFULLY`);
+    // console.log("Connection with DB established");
   } catch (err) {
     console.error("Unable to connect with DB");
   }
