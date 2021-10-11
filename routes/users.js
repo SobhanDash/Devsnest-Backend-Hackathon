@@ -63,7 +63,6 @@ router.put(
   "/user/profile/info/:emailId",
   ...isLoggedIn(),
   isVerified,
-  checkRole(["student"]),
   changeInfo
 );
 

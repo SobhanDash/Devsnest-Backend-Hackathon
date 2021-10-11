@@ -46,9 +46,11 @@ exports.updateActivity = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  const user = req.user;
+  let { emailId } = req.params;
+
+  // const user = await User.findOne({ where: { email: emailId } });
   try {
-    await User.destroy({ where: { id: user.id } });
+    await User.destroy({ where: { email: emailId } });
     res.status(200).send({ message: `User ${user.name} is deleted` });
   } catch (error) {
     res
